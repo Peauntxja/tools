@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Build macOS app
+        run: |
+          chmod +x scripts/build_macos.sh
+          ./scripts/build_macos.sh
+      - name: Zip artifact
+        run: |
+          cd dist
+          zip -r ../image-converter-macos.zip .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-converter-macos
+          path: image-converter-macos.zip
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Build Windows exe
+        run: scripts\build_windows.bat
+        shell: cmd
+      - name: Zip artifact
+        run: |
+          Compress-Archive -Path dist\* -DestinationPath image-converter-windows.zip
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-converter-windows
+          path: image-converter-windows.zip
+
+  release:
+    needs: [build-macos, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/image-converter-macos/image-converter-macos.zip
+            artifacts/image-converter-windows/image-converter-windows.zip
