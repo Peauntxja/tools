@@ -9,6 +9,10 @@
 | 工具 | 说明 | 入口 |
 |------|------|------|
 | image_converter | 批量图片格式转换（PNG / JPG / WebP / HEIC） | `image_converter/gui_ctk.py` |
+| reptile-rsj-sh-gov-cn | 上海市人社局社保稽核 / 仲裁公告爬虫 | `reptile-rsj-sh-gov-cn/main.py` |
+| reptile-12306-station | 12306 车站数据处理（CSV / JSON） | `reptile-12306-station/station_data_processor.py` |
+| getEXIF | 读取与修改图片 EXIF 信息 | `getEXIF/exif_tool.py` |
+| concurrent-test | API 并发、幂等性与安全性测试框架 | `concurrent-test/main.py` |
 
 ## 图片格式转换工具
 

@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# 爬虫运行产物
+announcements_*.csv
+announcements_*.json
+arbitration_announcements_*.csv
+arbitration_announcements_*.json
+*.log
