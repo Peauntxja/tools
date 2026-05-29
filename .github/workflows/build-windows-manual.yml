@@ -1,0 +1,29 @@
+name: Build Windows (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Build Windows GUI
+        run: scripts\build_windows.bat
+        shell: cmd
+      - name: Zip artifact
+        run: Compress-Archive -Path dist\* -DestinationPath image-converter-windows.zip
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-converter-windows
+          path: image-converter-windows.zip
+          retention-days: 14

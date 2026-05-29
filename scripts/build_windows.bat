@@ -9,11 +9,17 @@ echo %APP_NAME% - Windows 打包
 echo ==========================================
 
 where pyinstaller >nul 2>nul
-if %ERRORLEVEL% NEQ 0 (
-    echo 错误: 请先安装 PyInstaller
-    echo   pip install pyinstaller
-    pause
-    exit /b 1
+if %ERRORLEVEL% EQU 0 (
+    set PYINSTALLER_CMD=pyinstaller
+) else (
+    python -m PyInstaller --version >nul 2>nul
+    if %ERRORLEVEL% NEQ 0 (
+        echo 错误: 请先安装 PyInstaller
+        echo   pip install pyinstaller
+        pause
+        exit /b 1
+    )
+    set PYINSTALLER_CMD=python -m PyInstaller
 )
 
 pip install -r requirements.txt
@@ -25,14 +31,16 @@ if exist *.spec del /q *.spec
 set ICON_PARAM=
 if exist app_icon.ico set ICON_PARAM=--icon=app_icon.ico
 
-pyinstaller --name="%APP_NAME%" ^
+%PYINSTALLER_CMD% --name="%APP_NAME%" ^
     --windowed ^
     --onedir ^
     --clean ^
     --noconfirm ^
     --hidden-import=customtkinter ^
+    --hidden-import=image_converter ^
     --hidden-import=PIL ^
     --hidden-import=pillow_heif ^
+    --collect-all=customtkinter ^
     --collect-all=pillow_heif ^
     --add-data "shared;shared" ^
     %ICON_PARAM% ^
