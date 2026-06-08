@@ -1,0 +1,16 @@
+{
+  "name": "wenshu-export",
+  "version": "1.0.0",
+  "description": "Export China Judgements Online documents to HTML/PDF with watermark",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "export": "node lib/export.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

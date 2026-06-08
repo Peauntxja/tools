@@ -13,3 +13,5 @@ build/
 .vscode/
 *.dmg
 *.zip
+node_modules/
+wenshu-export/node_modules/
