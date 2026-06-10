@@ -1,0 +1,7 @@
+.env
+*.json
+limit_report.md
+report.md
+__pycache__/
+.venv/
+venv/
