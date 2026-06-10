@@ -16,4 +16,5 @@ build/
 node_modules/
 wenshu-export/node_modules/
 dashscope_stress/.env
-dashscope_stress/*.json
+dashscope_stress/report.json
+dashscope_stress/limit_report.json

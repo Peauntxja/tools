@@ -1,5 +1,6 @@
 .env
-*.json
+report.json
+limit_report.json
 limit_report.md
 report.md
 __pycache__/
